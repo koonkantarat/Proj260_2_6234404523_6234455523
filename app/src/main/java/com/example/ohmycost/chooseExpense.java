@@ -1,13 +1,15 @@
 package com.example.ohmycost;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class chooseExpense extends AppCompatActivity {
 
@@ -32,5 +34,11 @@ public class chooseExpense extends AppCompatActivity {
                 startActivity(backToMain);
             }
         });
+        Spinner typespin;
+        typespin = findViewById(R.id.typespin);
+        String [] typeselectList = getResources().getStringArray(R.array.typeselect);
+
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,android.R.layout.select_dialog_multichoice, typeselectList);
+        typespin.setAdapter(adapterType);
     }
 }

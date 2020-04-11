@@ -31,6 +31,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073" />
 
+    <string-array name = "typeselect">
+    <item>Food</item>
+    <item>Bus</item>
+    <item>Other</item>
+    </string-array>
+
     <Button
         android:id="@+id/select"
         android:layout_width="wrap_content"
@@ -62,5 +68,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cost"
         app:layout_constraintVertical_bias="0.224" />
+
+    <Spinner
+        android:id="@+id/typespin"
+        android:layout_width="221dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/select"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.793" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
