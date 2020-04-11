@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         TextView total_month = (TextView)findViewById(R.id.monthlyTotal);
         total_month.setText("Total = "+Double.toString(getTotalMonth()));
         final TextView total = (TextView)findViewById(R.id.total);
-        
+
         graph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
