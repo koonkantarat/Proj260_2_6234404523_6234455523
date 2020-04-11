@@ -18,9 +18,10 @@ public class graph extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent page_main = new Intent(com.example.ohmycost.graph.this,MainActivity.class);
+                Intent page_main = new Intent(graph.this,MainActivity.class);
                 startActivity(page_main);
             }
         });
+
     }
 }
