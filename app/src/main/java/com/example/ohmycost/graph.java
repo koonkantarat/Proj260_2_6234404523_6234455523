@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 public class graph extends AppCompatActivity {
 
+    public static void setOnClickListener(View.OnClickListener onClickListener) {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

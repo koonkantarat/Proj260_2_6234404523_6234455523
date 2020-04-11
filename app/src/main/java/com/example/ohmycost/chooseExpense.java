@@ -3,19 +3,25 @@ package com.example.ohmycost;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
-public class chooseExpense extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class chooseExpense extends AppCompatActivity{
 
     private TextView typeselect;
     private Button select, ok, back;
     private EditText cost;
+    private Spinner typeSpin;
+    private ArrayList<String> type = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +31,34 @@ public class chooseExpense extends AppCompatActivity {
         select = findViewById(R.id.select);
         ok = findViewById(R.id.ok);
         cost = findViewById(R.id.cost);
-
         back = findViewById(R.id.backToMain);
+        typeSpin = findViewById(R.id.typespin);
+        CreateTypeSelection();
+
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, type);
+        typeSpin.setAdapter(adapterType);
+
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backToMain = new Intent(chooseExpense.this,MainActivity.class);
+                Intent backToMain;
+                backToMain = new Intent(chooseExpense.this,MainActivity.class);
                 startActivity(backToMain);
             }
         });
-        Spinner typespin;
-        typespin = findViewById(R.id.typespin);
-        String [] typeselectList = getResources().getStringArray(R.array.typeselect);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String yourcost = cost.getText().toString();
+            }
+        });
+    }
 
-        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,android.R.layout.select_dialog_multichoice, typeselectList);
-        typespin.setAdapter(adapterType);
+    private void CreateTypeSelection() {
+
+        type.add("Food");
+        type.add("Bus");
+        type.add("Other");
     }
 }

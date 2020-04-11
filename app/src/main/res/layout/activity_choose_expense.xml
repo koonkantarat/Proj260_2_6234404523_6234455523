@@ -23,20 +23,17 @@
         android:id="@+id/typeselect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
         android:text="Type selection :"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/typespin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintVertical_bias="1.0" />
 
-    <string-array name = "typeselect">
-    <item>Food</item>
-    <item>Bus</item>
-    <item>Other</item>
-    </string-array>
+
 
     <Button
         android:id="@+id/select"
@@ -45,9 +42,10 @@
         android:text="SELECT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288" />
+        app:layout_constraintVertical_bias="0.325" />
 
     <EditText
         android:id="@+id/cost"
@@ -60,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.407" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <Button
         android:id="@+id/ok"
@@ -71,12 +69,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cost"
-        app:layout_constraintVertical_bias="0.224" />
+        app:layout_constraintVertical_bias="0.35" />
 
     <Spinner
         android:id="@+id/typespin"
         android:layout_width="221dp"
         android:layout_height="32dp"
+        android:text="@string/choose_of_type"
         app:layout_constraintBottom_toTopOf="@+id/select"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

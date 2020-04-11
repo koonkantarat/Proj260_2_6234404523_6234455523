@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.CalendarView;
 
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -25,24 +26,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button graph = (Button)findViewById(R.id.butt_graph);
-        Button add = (Button)findViewById(R.id.add);
+
         TextView total_month = (TextView)findViewById(R.id.monthlyTotal);
         total_month.setText("Total = "+Double.toString(getTotalMonth()));
         final TextView total = (TextView)findViewById(R.id.total);
 
+        Button graph = (Button)findViewById(R.id.butt_graph);
         graph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent page_graph = new Intent(MainActivity.this,graph.class);
+                Intent page_graph = new Intent(getApplicationContext(),graph.class);
                 startActivity(page_graph);
 
             }
         });
+        Button add = (Button)findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent page_add = new Intent(MainActivity.this,chooseExpense.class);
+                Intent page_add = new Intent(getApplicationContext(),chooseExpense.class);
                 startActivity(page_add);
             }
         });
