@@ -35,18 +35,36 @@ public class chooseExpense extends AppCompatActivity{
         typeSpin = findViewById(R.id.typespin);
         CreateTypeSelection();
 
-        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, type);
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
         typeSpin.setAdapter(adapterType);
 
+        typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String typeposition = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                return;
+            }
+        });
+
+        select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String typechoose = (String) typeSpin.getSelectedItem();
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent backToMain;
-                backToMain = new Intent(chooseExpense.this,MainActivity.class);
+                backToMain = new Intent(chooseExpense.this, MainActivity.class);
                 startActivity(backToMain);
             }
-        });
+                });
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
