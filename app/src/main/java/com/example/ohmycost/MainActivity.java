@@ -39,6 +39,7 @@ public abstract class MainActivity extends AppCompatActivity implements list{
         TextView total_month = (TextView)findViewById(R.id.monthlyTotal);
         total_month.setText("Total = "+Double.toString(getTotalMonth()));
         final TextView total = (TextView)findViewById(R.id.total);
+        Button del = (Button)findViewById(R.id.delete);
 
         graph.setOnClickListener(new View.OnClickListener() {
             @Override
