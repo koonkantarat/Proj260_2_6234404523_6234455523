@@ -63,6 +63,14 @@ public abstract class MainActivity extends AppCompatActivity implements list{
             }
         });
 
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent page_edit = new Intent(MainActivity.this, Editdetails.class);
+                startActivity(page_edit);
+            }
+        });
+
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -94,7 +102,7 @@ public abstract class MainActivity extends AppCompatActivity implements list{
         return total; //ค่าใช้จ่ายรายวัน
     }
     //เอาชนิดมาเก็บใน list1
-    public abstract void setType(chooseExpense type);
+    public abstract void setType(Object type);
     //เอาเงินมาเก็บใน list2
     public abstract void setExpense(chooseExpense expense);
     //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)

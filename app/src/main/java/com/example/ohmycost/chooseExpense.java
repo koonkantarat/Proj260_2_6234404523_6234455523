@@ -21,9 +21,10 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
     private Button select, ok, back;
     private EditText cost;
     private Spinner typeSpin;
-    private ArrayList<String> type = new ArrayList<String>();
-    private ArrayList listType;
-    private ArrayList listExpen;
+    private ArrayList<String> type = new ArrayList<>();
+    private ArrayList<chooseExpense> listType = new ArrayList<chooseExpense>();
+    private ArrayList<chooseExpense> listExpen = new ArrayList<chooseExpense>();
+    private String typechoose, typeadd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +41,29 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
         ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
         typeSpin.setAdapter(adapterType);
 
+        Bundle bundle = getIntent().getExtras();
+        String typeadd = bundle.getString("Type");
+        typechoose = typeadd;
+
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String typeposition = String.valueOf(position);
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Other")){
+                    select.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent page_other = new Intent(chooseExpense.this, OtherType.class);
+                            startActivity(page_other);
+                        }
+                    });
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                return;
+
             }
         });
 
@@ -56,6 +71,7 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
             @Override
             public void onClick(View v) {
                 String typechoose = (String) typeSpin.getSelectedItem();
+                typeselect.setText(typechoose);
 
             }
         });
@@ -71,7 +87,7 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String yourcost = cost.getText().toString();
+                String expense = cost.getText().toString();
             }
         });
     }
@@ -85,12 +101,12 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
 
     public abstract ArrayList combineList();
     //เอาชนิดมาเก็บใน list1
-    public void setType(chooseExpense typeChoose){
-        listType.add(typeChoose);
+    public void setType(Object type){
+        chooseExpense typechoose = (chooseExpense) type;
+        listType.add(typechoose);
     }
     //เอาเงินมาเก็บใน list2
     public void setExpense(chooseExpense expense){
-
         listExpen.add(expense);
     }
     //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)
