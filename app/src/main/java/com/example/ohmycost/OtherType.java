@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class OtherType extends AppCompatActivity {
 
-    private TextView message;
+    private TextView message1;
     private EditText typemore;
     private Button addtype, backToChooseExpense;
 
@@ -19,7 +19,7 @@ public class OtherType extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_type);
-        message = findViewById(R.id.message);
+        //message1 = findViewById(R.id.message); //ติดerrorบรรทัดนี้
         typemore = findViewById(R.id.typemore);
         addtype = findViewById(R.id.addtype);
         Button backToChoose = findViewById(R.id.backToChooseExpense);

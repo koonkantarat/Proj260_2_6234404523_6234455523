@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public abstract class  chooseExpense extends AppCompatActivity implements list{
+public class  chooseExpense extends AppCompatActivity {
 
     private TextView typeselect;
     private Button select, ok, back;
@@ -42,7 +42,7 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
         typeSpin.setAdapter(adapterType);
 
         Bundle bundle = getIntent().getExtras();
-        String typeadd = bundle.getString("Type");
+        //String typeadd = bundle.getString("Type");
         typechoose = typeadd;
 
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -98,7 +98,7 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
         type.add("Bus");
         type.add("Other");
     }
-
+/*
     public abstract ArrayList combineList();
     //เอาชนิดมาเก็บใน list1
     public void setType(Object type){
@@ -110,7 +110,7 @@ public abstract class  chooseExpense extends AppCompatActivity implements list{
         listExpen.add(expense);
     }
     //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)
-
+*/
     public ArrayList getListType(){
         return listType;
     }
