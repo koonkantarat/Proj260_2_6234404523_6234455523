@@ -23,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private double total_month;
     private Dictionary sec1;
     private TextView theDate;
-    protected ArrayList list;
+    private ArrayList list;
+    private ArrayList listType;
+    private ArrayList listExpen;
+    private String type;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         TextView total_month = (TextView)findViewById(R.id.monthlyTotal);
         total_month.setText("Total = "+Double.toString(getTotalMonth()));
         final TextView total = (TextView)findViewById(R.id.total);
-        Button del = (Button)findViewById(R.id.delete);
 
         graph.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,19 +53,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent page_add = new Intent(MainActivity.this,chooseExpense.class);
                 String strDate = (String)theDate.getText();
+                //เช็คด้วยว่าามี key นี้ยัง
                 //sec1.put(strDate, list);
-
+                TextView tryeiei = (TextView)findViewById(R.id.re);
+                tryeiei.setText(type);
                 startActivity(page_add);
             }
         });
 
-        del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent page_edit = new Intent(MainActivity.this, Editdetails.class);
-                startActivity(page_edit);
-            }
-        });
+        //ส่งค่า
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String type = bundle.getString("type");
+            String money = bundle.getString("expense");
+            getType(type);
+            //listType.add(type);
+           // listExpen.add(money);
+        }
+
+
+        //list.add(0,listType);
+        //list.add(1,listExpen);
+
+        //รวม list
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -101,11 +113,9 @@ public class MainActivity extends AppCompatActivity {
     //เอาเงินมาเก็บใน list2
     public abstract void setExpense(chooseExpense expense);
     //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)*/
-    public ArrayList combineList(chooseExpense listType ,chooseExpense listExpen){
-        list.add(listType);
-        list.add(listExpen);
-        return list;
-    }
 
+    public String getType(String typer){
+        return type;
+    }
     //business ligics
 }

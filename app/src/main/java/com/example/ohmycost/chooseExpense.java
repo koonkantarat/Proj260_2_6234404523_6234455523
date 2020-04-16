@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class  chooseExpense extends AppCompatActivity {
 
     private TextView typeselect;
-    private Button select, ok, back;
+    private Button select, ok;
     private EditText cost;
     private Spinner typeSpin;
     private ArrayList<String> type = new ArrayList<>();
@@ -34,7 +34,6 @@ public class  chooseExpense extends AppCompatActivity {
         select = findViewById(R.id.select);
         ok = findViewById(R.id.ok);
         cost = findViewById(R.id.cost);
-        back = findViewById(R.id.backToMain);
         typeSpin = findViewById(R.id.typespin);
         CreateTypeSelection();
 
@@ -42,8 +41,11 @@ public class  chooseExpense extends AppCompatActivity {
         typeSpin.setAdapter(adapterType);
 
         Bundle bundle = getIntent().getExtras();
-        //String typeadd = bundle.getString("Type");
-        typechoose = typeadd;
+        if (bundle!=null){
+            String typeadd = bundle.getString("Type");
+            typechoose = typeadd;
+        }
+
 
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -70,24 +72,27 @@ public class  chooseExpense extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String typechoose = (String) typeSpin.getSelectedItem();
+                String typechoose = "";
+                typechoose += (String) typeSpin.getSelectedItem();
+                //String typechoose = (String) typeSpin.getSelectedItem();
                 typeselect.setText(typechoose);
+                /*//ส่งข้อมูล
+                Intent type = new Intent(chooseExpense.this,chooseExpense.class);
+                type.putExtra("type",typechoose);
+                startActivity(type);*/
 
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent backToMain;
-                backToMain = new Intent(chooseExpense.this, MainActivity.class);
-                startActivity(backToMain);
-            }
-                });
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String expense = cost.getText().toString();
+                //ส่งข้อมูล
+                Intent all = new Intent(chooseExpense.this,MainActivity.class);
+                String expenseStr = cost.getText().toString();
+                all.putExtra("type",typechoose);
+                all.putExtra("expense",expenseStr);
+                startActivity(all);
             }
         });
     }
