@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                 String strDate = (String)theDate.getText();
                 //เช็คด้วยว่าามี key นี้ยัง
                 //sec1.put(strDate, list);
-                TextView tryeiei = (TextView)findViewById(R.id.re);
-                tryeiei.setText(type);
+                //TextView tryeiei = (TextView)findViewById(R.id.re);
+                //tryeiei.setText(type);
                 startActivity(page_add);
             }
         });

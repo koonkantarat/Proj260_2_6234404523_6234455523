@@ -58,21 +58,19 @@ public class  chooseExpense extends AppCompatActivity {
                 String typeposition = String.valueOf(position);
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Other")){
-                    select.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent page_other = new Intent(chooseExpense.this, OtherType.class);
-                            startActivity(page_other);
+                    Intent page_other = new Intent(chooseExpense.this, OtherType.class);
+                    startActivity(page_other);
                         }
-                    });
+
                 }
-            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
+
 
         select.setOnClickListener(new View.OnClickListener() {
             @Override
