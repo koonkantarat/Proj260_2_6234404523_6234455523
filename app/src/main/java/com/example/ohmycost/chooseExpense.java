@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class  chooseExpense extends AppCompatActivity {
 
     private TextView typeselect;
-    private Button select, ok;
+    private Button select, ok, back;
     private EditText cost;
     private Spinner typeSpin;
     private ArrayList<String> type = new ArrayList<>();
@@ -34,6 +34,7 @@ public class  chooseExpense extends AppCompatActivity {
         select = findViewById(R.id.select);
         ok = findViewById(R.id.ok);
         cost = findViewById(R.id.cost);
+        back = findViewById(R.id.backToMain);
         typeSpin = findViewById(R.id.typespin);
         CreateTypeSelection();
 
@@ -41,11 +42,8 @@ public class  chooseExpense extends AppCompatActivity {
         typeSpin.setAdapter(adapterType);
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle!=null){
-            String typeadd = bundle.getString("Type");
-            typechoose = typeadd;
-        }
-
+        //String typeadd = bundle.getString("Type");
+        typechoose = typeadd;
 
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -53,15 +51,16 @@ public class  chooseExpense extends AppCompatActivity {
                 String typeposition = String.valueOf(position);
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Other")){
-                    select.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent page_other = new Intent(chooseExpense.this, OtherType.class);
-                            startActivity(page_other);
+                    Intent page_Other = new Intent(chooseExpense.this,OtherType.class);
+                    /**ListView lisView1 = (ListView)findViewById(R.id.listView1);
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                            android.R.layout.simple_list_item_1, myData);
+
+                    lisView1.setAdapter(adapter);**/
+                    startActivity(page_Other);
                         }
-                    });
-                }
-            }
+                    }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -72,28 +71,29 @@ public class  chooseExpense extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String typechoose = "";
-                typechoose += (String) typeSpin.getSelectedItem();
-                //String typechoose = (String) typeSpin.getSelectedItem();
+                String typechoose = (String) typeSpin.getSelectedItem();
                 typeselect.setText(typechoose);
-                /*//ส่งข้อมูล
-                Intent type = new Intent(chooseExpense.this,chooseExpense.class);
-                type.putExtra("type",typechoose);
-                startActivity(type);*/
 
             }
         });
 
-        ok.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ส่งข้อมูล
-                Intent all = new Intent(chooseExpense.this,MainActivity.class);
-                String expenseStr = cost.getText().toString();
-                all.putExtra("type",typechoose);
-                all.putExtra("expense",expenseStr);
-                startActivity(all);
+                Intent backToMain;
+                backToMain = new Intent(chooseExpense.this, MainActivity.class);
+                startActivity(backToMain);
             }
+                });
+        ok.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent all = new Intent(chooseExpense.this,MainActivity.class);
+                 String expeseStr = cost.getText().toString();
+                 all.putExtra("type",typechoose);
+                 all.putExtra("expense", expeseStr);
+                 startActivity(all);
+             }
         });
     }
 

@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/message"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OtherType">
@@ -22,14 +21,15 @@
 
     <Button
         android:id="@+id/addtype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="384dp"
+        android:layout_width="92dp"
+        android:layout_height="50dp"
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/typemore" />
+        app:layout_constraintTop_toBottomOf="@+id/typemore"
+        app:layout_constraintVertical_bias="0.182" />
 
     <EditText
         android:id="@+id/typemore"
@@ -37,7 +37,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textShortMessage|textLongMessage"
-        android:text="Type"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,5 +51,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addtype" />
+        app:layout_constraintTop_toBottomOf="@+id/typemore"
+        app:layout_constraintVertical_bias="0.581" />
+
+    <Button
+        android:id="@+id/dataType"
+        android:layout_width="135dp"
+        android:layout_height="51dp"
+        android:text="data of Type"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typemore"
+        app:layout_constraintVertical_bias="0.18" />
 </androidx.constraintlayout.widget.ConstraintLayout>

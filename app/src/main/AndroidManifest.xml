@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Editdetails"></activity>
+        <activity android:name=".TypeData"></activity>
+        <activity android:name=".Editdetails" />
         <activity android:name=".OtherType" />
         <activity android:name=".graph" />
         <activity android:name=".chooseExpense" />
