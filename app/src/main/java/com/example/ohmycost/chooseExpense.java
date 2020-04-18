@@ -1,5 +1,6 @@
 package com.example.ohmycost;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -20,11 +22,16 @@ public class  chooseExpense extends AppCompatActivity {
     private TextView typeselect;
     private Button select, ok;
     private EditText cost;
+    private EditText type_data;
     private Spinner typeSpin;
     private ArrayList<String> type = new ArrayList<>();
     private ArrayList<chooseExpense> listType = new ArrayList<chooseExpense>();
     private ArrayList<chooseExpense> listExpen = new ArrayList<chooseExpense>();
     private String typechoose, typeadd;
+
+    private DBHelper mHelper;
+
+    private int ID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +96,47 @@ public class  chooseExpense extends AppCompatActivity {
             public void onClick(View v) {
                 //ส่งข้อมูล
                 Intent all = new Intent(chooseExpense.this,MainActivity.class);
-                String expenseStr = cost.getText().toString();
-                all.putExtra("type",typechoose);
-                all.putExtra("expense",expenseStr);
+                //String expenseStr = cost.getText().toString();
+                //String typechooser = typechoose.toUpperCase();
+                //all.putExtra("type",typechoose.toString());
+                all.putExtra("expense",cost.getText().toString());
                 startActivity(all);
+
+                //database
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(chooseExpense.this);
+                builder.setTitle("Add this expense?");
+                builder.setMessage("Are you sure to add this expense?");
+
+
+                //ถ้ายืนยันจะเพิ่มข้อมูลนี้ กด ok
+                builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        list list = new list();
+                        list.setType(type_data.getText().toString());
+                        list.setExpense(cost.getText().toString());
+
+                        if(ID == -1){
+                            mHelper.addList(list);
+                        }
+                        else {
+                            list.setID(ID);
+                        }
+                        finish();
+                    }
+                });
+                //ถ้ายืนยันจะเพิ่มข้อมูลนี้ กด cancel
+                builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
             }
         });
+        Intent bundle1 = getIntent();
+        String day_choose = bundle1.getStringExtra("strDate");
     }
 
     private void CreateTypeSelection() {
