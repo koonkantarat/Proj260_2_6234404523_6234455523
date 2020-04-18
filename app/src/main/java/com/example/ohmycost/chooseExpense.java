@@ -1,5 +1,6 @@
 package com.example.ohmycost;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -20,11 +22,16 @@ public class  chooseExpense extends AppCompatActivity {
     private TextView typeselect;
     private Button select, ok, back;
     private EditText cost;
+    private EditText type_data;
     private Spinner typeSpin;
     private ArrayList<String> type = new ArrayList<>();
     private ArrayList<chooseExpense> listType = new ArrayList<chooseExpense>();
     private ArrayList<chooseExpense> listExpen = new ArrayList<chooseExpense>();
     private String typechoose, typeadd;
+
+    private DBHelper mHelper;
+
+    private int ID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +58,15 @@ public class  chooseExpense extends AppCompatActivity {
                 String typeposition = String.valueOf(position);
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Other")){
-                    Intent page_Other = new Intent(chooseExpense.this,OtherType.class);
-                    /**ListView lisView1 = (ListView)findViewById(R.id.listView1);
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                            android.R.layout.simple_list_item_1, myData);
-
-                    lisView1.setAdapter(adapter);**/
-                    startActivity(page_Other);
+                    select.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent page_other = new Intent(chooseExpense.this, OtherType.class);
+                            startActivity(page_other);
                         }
-                    }
+                    });
+                }
+            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -86,15 +92,18 @@ public class  chooseExpense extends AppCompatActivity {
             }
                 });
         ok.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent all = new Intent(chooseExpense.this,MainActivity.class);
-                 String expeseStr = cost.getText().toString();
-                 all.putExtra("type",typechoose);
-                 all.putExtra("expense", expeseStr);
-                 startActivity(all);
-             }
+            @Override
+            public void onClick(View v) {
+                //ส่งข้อมูล
+                Intent all = new Intent(chooseExpense.this,MainActivity.class);
+                String expenseStr = cost.getText().toString();
+                all.putExtra("type",typechoose);
+                all.putExtra("expense",expenseStr);
+                startActivity(all);
+            }
         });
+        Intent bundle1 = getIntent();
+        String day_choose = bundle1.getStringExtra("strDate");
     }
 
     private void CreateTypeSelection() {

@@ -114,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
     public abstract void setExpense(chooseExpense expense);
     //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)*/
 
-    public String getType(String typer){return type; }
+    public String getType(String typer){
+        return type;
+    }
     //business ligics
 }
