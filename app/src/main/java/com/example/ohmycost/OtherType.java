@@ -33,12 +33,11 @@ public class OtherType extends AppCompatActivity {
         addtype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String type = typemore.getText().toString();
-                if(!type.equals("") && SQdb.insertData(type)){
-                    Toast.makeText(OtherType.this, "Type add Success", Toast.LENGTH_SHORT).show();
+                String newEntry = typemore.getText().toString();
+                if(typemore.length() != 0){
+                    AddData(newEntry);
                     typemore.setText("");
-                }
-                else{
+                }else{
                     Toast.makeText(OtherType.this, "Please add again", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -56,10 +55,18 @@ public class OtherType extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backToChoose = new Intent(OtherType.this, chooseExpense.class);
-                //backToChoose.putExtra("Type",typemore.getText().toString());
                 startActivity(backToChoose);
             }
         });
+    }
+
+    public void AddData(String newEntry){
+        boolean insertData = SQdb.addData(newEntry);
+        if(insertData){
+            Toast.makeText(OtherType.this, "Type add Success", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(OtherType.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
