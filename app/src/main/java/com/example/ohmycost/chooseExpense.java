@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +30,7 @@ public class  chooseExpense extends AppCompatActivity {
     private ArrayList<chooseExpense> listExpen = new ArrayList<chooseExpense>();
     private String typechoose, typeadd;
 
-    private DBHelper mHelper;
+    DBHelper myDB;
 
     private int ID = -1;
 
@@ -121,7 +122,7 @@ public class  chooseExpense extends AppCompatActivity {
         }
     }
     //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)
-*/
+
     public ArrayList getListType(){
         return listType;
     }
