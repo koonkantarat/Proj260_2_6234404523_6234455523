@@ -7,13 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
-    private static final String TABLE_NAME = "type_table";
+    public static final String TABLE_NAME = "type_table";
 
-    private static final  String ID = "ID";
-    private static final  String NAME = "types";
+    public static final  String ID = "ID";
+    public static final  String NAME = "types";
 
 
     public DatabaseHelper(Context context) {
@@ -77,7 +80,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQdb.execSQL(query);
         SQdb.close();
     }
-
 }
 
 

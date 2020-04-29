@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +19,8 @@ import java.util.ArrayList;
 
 public class  chooseExpense extends AppCompatActivity {
 
-    DBHelper myDB;
-
     private TextView typeselect;
-    private Button select, ok, back , view;
+    private Button select, ok, back;
     private EditText cost;
     private EditText type_data;
     private Spinner typeSpin;
@@ -46,10 +43,6 @@ public class  chooseExpense extends AppCompatActivity {
         cost = findViewById(R.id.cost);
         back = findViewById(R.id.backToMain);
         typeSpin = findViewById(R.id.typespin);
-        view = findViewById(R.id.view);
-
-        myDB = new DBHelper(this);
-
         CreateTypeSelection();
 
         ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
@@ -99,31 +92,16 @@ public class  chooseExpense extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String newEntry1 = typeselect.getText().toString();
-                String newEntry2 = cost.getText().toString();
-                //all.putExtra("type",newEntry1);
-                //all.putExtra("expense",newEntry2);
-
-                if (newEntry1!= "Type selection:" && newEntry2.length() !=0){
-                    AddData_ex(newEntry1,newEntry2);
-                }else{
-                    Toast.makeText(chooseExpense.this, "YOU MUST PUT STH",Toast.LENGTH_LONG).show();
-                }
-
-                //startActivity(all);
+                //ส่งข้อมูล
+                Intent all = new Intent(chooseExpense.this,MainActivity.class);
+                String expenseStr = cost.getText().toString();
+                all.putExtra("type",typechoose);
+                all.putExtra("expense",expenseStr);
+                startActivity(all);
             }
         });
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(chooseExpense.this,ViewListContents.class);
-
-                startActivity(intent);
-            }
-        });
-
+        Intent bundle1 = getIntent();
+        String day_choose = bundle1.getStringExtra("strDate");
     }
 
     private void CreateTypeSelection() {
@@ -142,4 +120,13 @@ public class  chooseExpense extends AppCompatActivity {
             Toast.makeText(chooseExpense.this,"Sth wrong",Toast.LENGTH_LONG).show();
         }
     }
+    //รวม list1,2 ไว้ใน list เพื่อใช้เป็น value ของ dict sec1 (ที่มี ันที่ป็นคีย์)
+*/
+    public ArrayList getListType(){
+        return listType;
+    }
+    public ArrayList getListExpen(){
+        return listExpen;
+    }
+
 }
