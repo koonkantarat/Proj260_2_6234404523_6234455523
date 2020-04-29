@@ -7,6 +7,9 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,72 +17,67 @@ import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = "DBHelper";
+
+    public static final String DATABASE_NAME = "mylist.db";
+    public static final String TABLE_NAME = "mylist_data";
+    public static final String COL_ID = "ID";
+    public static final String COL_TYPE = "type";
+    public static final String COL_EXPENSE = "expense";
+    private static final int DATABASE_VERSION = 1;
 
     private SQLiteDatabase sqLiteDatabase;
 
-    public DBHelper( Context context) {
-        super(context, "DB_list.db",null,1);
+    public DBHelper( @Nullable Context context) {
+        super(context, "DB_list.db",null,DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_LIST_TABLE = String.format("CREATE TABLE %s "+" (%s TEXT PRIMARY KEY AUTOINCREMENT, %s TEXT) ",
-                list.TABLE,
-                list.column.ID,
-                list.column.TYPE,
-                list.column.EXPENSE);
+        String CREATE_LIST_TABLE = "CREATE TABLE "+ TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_TYPE + " TEXT,"
+                + COL_EXPENSE +" TEXT);";
 
-        Log.i(TAG, CREATE_LIST_TABLE );
-
-        //create friend table
         db.execSQL(CREATE_LIST_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String DROP_LIST_TABLE = "DROP TABLE IF EXISTS list";
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        String DROP_LIST_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
         db.execSQL(DROP_LIST_TABLE);
 
         onCreate(db);
     }
 
-    public List<String> getList(){
-        List<String> lists = new ArrayList<>();
+    public boolean addData_ex(String type,String expense){
 
-        sqLiteDatabase = this.getWritableDatabase(); //เข้าถึงการอ่าน database
-
-        Cursor cursor = sqLiteDatabase.query
-                (list.TABLE, null,null,null,null,null,null);
-                //query ข้อมูลจาก table list ทั้งหมด = SELECT * FROM list
-
-        if (cursor != null){
-            cursor.moveToFirst();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COL_TYPE,type);
+        contentValues.put(DBHelper.COL_EXPENSE,expense);
+        System.out.println(contentValues);
+        Log.d(TAG, "addData: Adding " + type + " to " + TABLE_NAME);
+        long result = db.insert(TABLE_NAME,null,contentValues);
+        System.out.println(db);
+        db.close();
+        //insert return -1
+        if(result == -1){
+            return false;
+        }else{
+            return true;
         }
-
-        //ส่งค่าไป lists
-        while (!cursor.isAfterLast()){
-
-            lists.add(cursor.getString(0)+" "+cursor.getDouble(1)); //อาจจะใส่ i
-
-            cursor.moveToNext();
-        }
-
-        sqLiteDatabase.close();
-
-        return lists;
     }
 
-    public void addList(list list) {
-        sqLiteDatabase = this.getWritableDatabase();
+    public Cursor getListContents_ex(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data_contents = db.rawQuery("SELECT * FROM " + TABLE_NAME,null);
+        return data_contents;
+    }
 
-        ContentValues values = new ContentValues(); //contentValues putค่า key(ช่ื่อ column),value
-        values.put(com.example.ohmycost.list.column.TYPE ,list.getType());
-        values.put(com.example.ohmycost.list.column.EXPENSE,list.getExpense());
-
-        sqLiteDatabase.insert(com.example.ohmycost.list.TABLE,null,values);
-
-        sqLiteDatabase.close();
+    public Cursor getListExpense(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT "+ COL_ID + "," + COL_EXPENSE + " FROM "+ TABLE_NAME ;
+        Cursor data_Expense = db.rawQuery(query,null);
+        return data_Expense;
     }
 }
