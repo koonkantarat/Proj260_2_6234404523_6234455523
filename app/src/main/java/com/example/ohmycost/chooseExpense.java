@@ -2,6 +2,8 @@ package com.example.ohmycost;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,15 +26,14 @@ public class  chooseExpense extends AppCompatActivity {
     private Button select, ok, back;
     private EditText cost;
     private EditText type_data;
-    private Spinner typeSpin;
-    private ArrayList<String> type = new ArrayList<>();
     private ArrayList<chooseExpense> listType = new ArrayList<chooseExpense>();
     private ArrayList<chooseExpense> listExpen = new ArrayList<chooseExpense>();
-    private String typechoose, typeadd;
+    private String typechoose;
 
     DBHelper myDB;
+    DatabaseHelper SQdb;
 
-    private int ID = -1;
+    //private int ID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +44,23 @@ public class  chooseExpense extends AppCompatActivity {
         ok = findViewById(R.id.ok);
         cost = findViewById(R.id.cost);
         back = findViewById(R.id.backToMain);
-        typeSpin = findViewById(R.id.typespin);
-        CreateTypeSelection();
 
-        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
+        final Spinner typeSpin = findViewById(R.id.typespin);
+
+        ArrayList<String> typeList = new ArrayList<>(); //สร้าง ArrayList เพื่อเก็บข้อมูลประเภทที่ผู้ใช้ป้อนเข้ามาใน Database
+        SQdb = new DatabaseHelper(this);
+        SQLiteDatabase mydata = SQdb.getWritableDatabase();
+        Cursor cursor = mydata.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            typeList.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME)));
+            cursor.moveToNext();
+        }
+        typeList.add("Other");
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, typeList);
         typeSpin.setAdapter(adapterType);
 
-        Bundle bundle = getIntent().getExtras();
-        //String typeadd = bundle.getString("Type");
-        typechoose = typeadd;
+
 
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -105,12 +114,6 @@ public class  chooseExpense extends AppCompatActivity {
         String day_choose = bundle1.getStringExtra("strDate");
     }
 
-    private void CreateTypeSelection() {
-
-        type.add("Food");
-        type.add("Bus");
-        type.add("Other");
-    }
 
     public void AddData_ex (String newEntry1,String newEntry2){
         boolean insetData = myDB.addData_ex(newEntry1,newEntry2);
