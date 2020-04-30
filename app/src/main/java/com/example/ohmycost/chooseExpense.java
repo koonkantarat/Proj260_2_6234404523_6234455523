@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class  chooseExpense extends AppCompatActivity {
 
-    DBHelper myDB;
+    DBHelper myDB,DB;
     DatabaseHelper SQdb;
 
     private TextView typeselect;
@@ -29,7 +29,7 @@ public class  chooseExpense extends AppCompatActivity {
     private EditText type_data;
     private Spinner typeSpin;
     private ArrayList<String> type = new ArrayList<>();
-    private String typechoose;
+    private String typechoose ,day_choose ,month_choose ,year_choose;
 
 
     @Override
@@ -45,7 +45,14 @@ public class  chooseExpense extends AppCompatActivity {
         //view = findViewById(R.id.view);
 
         myDB = new DBHelper(this);
+        DB = new DBHelper(this);
         final Spinner typeSpin = findViewById(R.id.typespin);
+
+        Intent bundle1 = getIntent();
+        final String day_choose = bundle1.getStringExtra("day");
+        final String month_choose = bundle1.getStringExtra("month");
+        final String year_choose = bundle1.getStringExtra("year");
+        //AddData_date(day_choose,month_choose,year_choose);
 
         ArrayList<String> typeList = new ArrayList<>(); //สร้าง ArrayList เพื่อเก็บข้อมูลประเภทที่ผู้ใช้ป้อนเข้ามาใน Database
         SQdb = new DatabaseHelper(this);
@@ -94,15 +101,12 @@ public class  chooseExpense extends AppCompatActivity {
                 //ส่งข้อมูล
                 Intent all = new Intent(chooseExpense.this,MainActivity.class);
                 String expenseStr = cost.getText().toString();
-                startActivity(all);
 
-                //String newEntry1 = typechoose;
-                //String newEntry2 = expenseStr;
                 all.putExtra("type",typechoose);
                 all.putExtra("expense",expenseStr);
 
-                if (typechoose.length() !=0  && expenseStr.length() !=0){
-                    AddData_ex(typechoose,expenseStr);
+                if ( expenseStr.length() !=0){
+                    AddData_ex(typechoose,expenseStr,day_choose,month_choose,year_choose);
                 }else{
                     Toast.makeText(chooseExpense.this, "YOU MUST PUT STH",Toast.LENGTH_LONG).show();
                 }
@@ -110,25 +114,17 @@ public class  chooseExpense extends AppCompatActivity {
                 startActivity(all);
             }
         });
-        Intent bundle1 = getIntent();
-        String day_choose = bundle1.getStringExtra("strDate");
 
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(chooseExpense.this,ViewListContents.class);
-
-                startActivity(intent);
-            }
-        });*/
 
     }
+/*
+    public void AddData_date (String day,String month, String year){
+        DB.addData_date(day, month, year);
+    }*/
 
-
-    public void AddData_ex (String newEntry1,String newEntry2){
-        boolean insetData = myDB.addData_ex(newEntry1,newEntry2);
-        Toast.makeText(chooseExpense.this,newEntry1+newEntry2,Toast.LENGTH_LONG).show();
-        if(insetData){
+    public void AddData_ex (String newEntry1,String newEntry2, String day,String month, String year){
+        boolean insertData = myDB.addData_ex(newEntry1,newEntry2,day, month, year);
+        if(insertData){
             Toast.makeText(chooseExpense.this,"Successfully",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(chooseExpense.this,"Sth wrong",Toast.LENGTH_LONG).show();
