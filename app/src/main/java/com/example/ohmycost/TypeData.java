@@ -57,13 +57,15 @@ public class TypeData extends AppCompatActivity {
         TypelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                String name = parent.getItemAtPosition(position).toString();
+                String name = (String) parent.getItemAtPosition(position);
                 Log.d(TAG, "onItemClick: You Click on:" + name);
                 Cursor mydata = SQdb.getItemID(name);
                 int itemID = -1;
                 while (mydata.moveToNext()) {
                     itemID = mydata.getInt(0);
+
                 }
+                System.out.println(itemID);
                 if (itemID > -1) {
                     Log.d(TAG, "OnItemClick: The ID is:" + itemID);
                     Intent editType = new Intent(TypeData.this, EditType.class);

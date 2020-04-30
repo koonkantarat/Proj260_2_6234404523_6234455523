@@ -1,6 +1,8 @@
 package com.example.ohmycost;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class  chooseExpense extends AppCompatActivity {
 
     DBHelper myDB;
+    DatabaseHelper SQdb;
 
     private TextView typeselect;
     private Button select, ok, back , view;
@@ -26,9 +29,8 @@ public class  chooseExpense extends AppCompatActivity {
     private EditText type_data;
     private Spinner typeSpin;
     private ArrayList<String> type = new ArrayList<>();
-    private String typechoose, typeadd;
+    private String typechoose;
 
-    private int ID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,21 @@ public class  chooseExpense extends AppCompatActivity {
         //view = findViewById(R.id.view);
 
         myDB = new DBHelper(this);
+        final Spinner typeSpin = findViewById(R.id.typespin);
 
-        CreateTypeSelection();
-
-        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
+        ArrayList<String> typeList = new ArrayList<>(); //สร้าง ArrayList เพื่อเก็บข้อมูลประเภทที่ผู้ใช้ป้อนเข้ามาใน Database
+        SQdb = new DatabaseHelper(this);
+        SQLiteDatabase mydata = SQdb.getWritableDatabase();
+        Cursor cursor = mydata.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            typeList.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME)));
+            cursor.moveToNext();
+        }
+        typeList.add("Other");
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, typeList);
         typeSpin.setAdapter(adapterType);
-        Bundle bundle = getIntent().getExtras();
-        //String typeadd = bundle.getString("Type");
-        typechoose = typeadd;
+
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -68,8 +77,7 @@ public class  chooseExpense extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String typechoose = (String) typeSpin.getSelectedItem();
-                typeselect.setText(typechoose);
+                typechoose = (String) typeSpin.getSelectedItem();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -86,17 +94,15 @@ public class  chooseExpense extends AppCompatActivity {
                 //ส่งข้อมูล
                 Intent all = new Intent(chooseExpense.this,MainActivity.class);
                 String expenseStr = cost.getText().toString();
-                //all.putExtra("type",typechoose);
-                //all.putExtra("expense",expenseStr);
                 startActivity(all);
 
-                String newEntry1 = typeselect.getText().toString();
-                String newEntry2 = cost.getText().toString();
-                all.putExtra("type",newEntry1);
-                all.putExtra("expense",newEntry2);
+                //String newEntry1 = typechoose;
+                //String newEntry2 = expenseStr;
+                all.putExtra("type",typechoose);
+                all.putExtra("expense",expenseStr);
 
-                if (newEntry1!= "Type selection:" && newEntry2.length() !=0){
-                    AddData_ex(newEntry1,newEntry2);
+                if (typechoose.length() !=0  && expenseStr.length() !=0){
+                    AddData_ex(typechoose,expenseStr);
                 }else{
                     Toast.makeText(chooseExpense.this, "YOU MUST PUT STH",Toast.LENGTH_LONG).show();
                 }
@@ -118,11 +124,6 @@ public class  chooseExpense extends AppCompatActivity {
 
     }
 
-    private void CreateTypeSelection() {
-        type.add("Food");
-        type.add("Bus");
-        type.add("Other");
-    }
 
     public void AddData_ex (String newEntry1,String newEntry2){
         boolean insetData = myDB.addData_ex(newEntry1,newEntry2);
