@@ -35,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
     private ListView typeListOut;
     private Button graph,add;
 
+    private String Typeselect,Expenseput;
+
     DBHelper DB = new DBHelper(this);;
     DBHelper myDB = new DBHelper(this);
     Cursor data, data_a;
     ArrayList<String> theList = new ArrayList<>();
     ArrayList<String> list_final = new ArrayList<>();
     ArrayList<String> list_date_expense = new ArrayList<>();
+    ArrayList<String> theList_cal = new ArrayList<>();
     ListAdapter listAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         TextView total_text = (TextView)findViewById(R.id.total);
 
         TextView total_month_text = (TextView)findViewById(R.id.monthlyTotal);
+
+        Intent intent = getIntent();
+        Typeselect = intent.getStringExtra("type");
+        Expenseput = intent.getStringExtra("expense");
 
 
 
@@ -145,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         if(data.getCount() == 0){
             Toast.makeText(MainActivity.this,"db was empty",Toast.LENGTH_LONG).show();
         }else{
-            while (data.moveToNext()) {
+            /*while (data.moveToNext()) {
                 theList.add(data.getString(2));
             }
             System.out.println(theList);
@@ -166,18 +173,31 @@ public class MainActivity extends AppCompatActivity {
             }
             System.out.println(x);
             if( day_d == x.get(2) && month_m == x.get(3) && year_y == x.get(4)){
-                list_final.add(x.get(0) + ":          " + x.get(1));
+                list_final.add(data.getString(1) + ":          " + data.getString(2));
                 while ( data.moveToNext()){
+                    //list_final.add(x.get(0) + ":          " + x.get(1));
                     list_date_expense.add(x.get(1));
                 }
+                System.out.println(list_final);
                 listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list_final);
                 typeListOut.setAdapter(listAdapter);
-            }
+            }*/
 
-            if (theList.size() > 0){
-                for(int i = 0; i < theList.size(); i++){
+            if(data.getCount() == 0){
+                Toast.makeText(MainActivity.this,"db was empty",Toast.LENGTH_LONG).show();
+            }else{
+                while (data.moveToNext()) {
+                    theList.add(data.getString(1)+": " + data.getInt(2));
+                    theList_cal.add(data.getString(2));
+                    listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
+                    typeListOut.setAdapter(listAdapter);
+                }
+            }
+            System.out.println(theList_cal);
+            if (theList_cal.size() > 0){
+                for(int i = 0; i < theList_cal.size(); i++){
                     double total_m = 0;
-                    total_m = Double.parseDouble(theList.get(i));
+                    total_m = Double.parseDouble(theList_cal.get(i));
                     total_month = total_month + total_m;
                     System.out.println(total_m);
                 }

@@ -105,8 +105,9 @@ public class  chooseExpense extends AppCompatActivity {
                 all.putExtra("type",typechoose);
                 all.putExtra("expense",expenseStr);
 
+
                 if ( expenseStr.length() !=0){
-                    AddData_ex(typechoose,expenseStr,day_choose,month_choose,year_choose);
+                    AddData_ex(typechoose,expenseStr, day_choose, month_choose, year_choose);
                 }else{
                     Toast.makeText(chooseExpense.this, "YOU MUST PUT STH",Toast.LENGTH_LONG).show();
                 }
