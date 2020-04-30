@@ -26,8 +26,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL_EXPENSE = "expense";
     private static final int DATABASE_VERSION = 1;
 
-    private SQLiteDatabase sqLiteDatabase;
-
     public DBHelper( @Nullable Context context) {
         super(context, "DB_list.db",null,DATABASE_VERSION);
     }
@@ -55,10 +53,11 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COL_TYPE,type);
         contentValues.put(DBHelper.COL_EXPENSE,expense);
-        System.out.println(contentValues);
-        Log.d(TAG, "addData: Adding " + type + " to " + TABLE_NAME);
+        //System.out.println(contentValues);
+        Log.d(TAG,"database" + db );
+        Log.d(TAG, "addData: Adding " + type + ","+ expense + " to " + TABLE_NAME);
         long result = db.insert(TABLE_NAME,null,contentValues);
-        System.out.println(db);
+        //System.out.println(db);
         db.close();
         //insert return -1
         if(result == -1){
@@ -78,6 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT "+ COL_ID + "," + COL_EXPENSE + " FROM "+ TABLE_NAME ;
         Cursor data_Expense = db.rawQuery(query,null);
+        Log.d(TAG,data_Expense + TABLE_NAME);
         return data_Expense;
     }
 }

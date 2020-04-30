@@ -26,17 +26,19 @@ import java.util.Dictionary;
 public class MainActivity extends AppCompatActivity {
 
     private double total;
-    private double expense;
-    private double total_month = 0;
-    private String type;
+    private double expense,amount;
+    private String totalMonth;
 
     private TextView theDate;
     private ListView typeListOut;
     private Button graph,add;
 
-    DBHelper myDB;
+    DBHelper DB;
+    DBHelper myDB = new DBHelper(this);
+    Cursor data, mydata;
     ArrayList<String> theList = new ArrayList<>();
     ArrayList<String> list_final = new ArrayList<>();
+    ArrayList<String> arr = new ArrayList<>();
     ListAdapter listAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +50,15 @@ public class MainActivity extends AppCompatActivity {
         typeListOut = findViewById(R.id.TypelistView);
 
         TextView total_month_text = (TextView)findViewById(R.id.monthlyTotal);
-        total_month_text.setText(getTotalMonth());
-        String totalMonth = getTotalMonth();
-        total_month_text.setText(totalMonth);
+        double totalMonth_1 = ListView();
+        total_month_text.setText("Total : "+ String.valueOf(totalMonth_1));
 
         final TextView total = (TextView)findViewById(R.id.total);
 
-        myDB = new DBHelper(this);
-        Cursor data = myDB.getListContents_ex();
+
+        //data = myDB.getListContents_ex();
+        DB = new DBHelper(this);
+        mydata = DB.getListExpense();
 
 
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent page_add = new Intent(MainActivity.this,chooseExpense.class);
                 String strDate = (String)theDate.getText();
-                if (strDate.length() != 0 ){
+                if (strDate.length() == 0 ){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Select the date");
                     builder.setPositiveButton("เลือก", new DialogInterface.OnClickListener() {
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 String date = dayOfMonth +"/"+month+"/"+year;
                 theDate.setText(date);
-                total.setText("Total = "+Double.toString(getTotal())); //ไม่แน่ใจว่าควรอยู๋ตรงไหน
+                //total.setText("Total = "+Double.toString(getTotal())); //ไม่แน่ใจว่าควรอยู๋ตรงไหน
             }
         });
 
@@ -113,15 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(data.getCount() == 0){
-            Toast.makeText(MainActivity.this,"db was empty",Toast.LENGTH_LONG).show();
-        }else{
-            while (data.moveToNext()) {
-                theList.add(data.getString(1)+": " + data.getInt(2));
-                listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
-                typeListOut.setAdapter(listAdapter);
-            }
-        }
+        ListView();
     }
 
     @Override
@@ -133,10 +128,38 @@ public class MainActivity extends AppCompatActivity {
         this.expense = expense;
     }
 
-   /* public double getTotalMonth(){
-        total_month = total_month + expense;
-        return total_month; //ค่าใช้จ่ายรายเดือน
-    }*/
+
+
+
+    public double ListView(){
+        data = myDB.getListContents_ex();
+        double total_month = 0;
+        if(data.getCount() == 0){
+            Toast.makeText(MainActivity.this,"db was empty",Toast.LENGTH_LONG).show();
+        }else{
+            while (data.moveToNext()) {
+                theList.add(data.getString(2));
+                listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
+                typeListOut.setAdapter(listAdapter);
+            }
+            System.out.println(theList);
+            if (theList.size() > 0){
+                for(int i = 0; i < theList.size(); i++){
+                    double total_m = 0;
+                    total_m = Double.parseDouble(theList.get(i));
+                    total_month = total_month + total_m;
+                    System.out.println(total_m);
+                }
+            }
+            //setTotalMonth(total_month);
+        }
+        return total_month;
+
+    }
+
+   /* public void setTotalMonth(double total_month) {
+        this.total_month = total_month;
+    }
 
     public double getTotal(){
         total = total + this.expense;
@@ -144,25 +167,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getTotalMonth() {
-        /*Cursor mydata = myDB.getListContents_ex();
-        mydata.moveToFirst();
-        if (mydata != null) {
+        //Cursor mydata = myDB.getListExpense();
+        //data.moveToFirst();
+        /*for (int i = 0 ; i < arr.size() ; i++){
+            amount = Double.parseDouble(arr.get(i));
+            total_month = total_month + amount;
+        }
+        if (listAdapter != null) {
             ArrayList<Double> listData = new ArrayList<>();
             for (int j = 0; j < mydata.getCount(); j++) {
                 while (mydata.moveToPosition(j)) {
-                    listData.add(mydata.getDouble(2));
-                    total_month = total_month + mydata.getDouble(2);
+                    listData.add(mydata.getDouble(1));
+                    total_month = total_month + mydata.getDouble(1);
                 }
             }
-        }else{
-            total_month = 100;
-        }*/
-        for(int i = 0; i < theList.size(); i++){
-            list_final.add(theList.get(i));
-            double total_m = Double.parseDouble(list_final.get(2));
-            total_month = total_month + total_m;
-            list_final.remove(theList.get(i));
         }
+        System.out.println(myDB);*
+
+        System.out.println(total_month);
+        //System.out.println(theList);
+
         return "Total = "+total_month;
-    }
+    }*/
+
 }
