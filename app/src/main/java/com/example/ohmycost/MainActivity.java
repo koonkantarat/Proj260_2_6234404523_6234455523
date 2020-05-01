@@ -77,14 +77,15 @@ public class MainActivity extends AppCompatActivity {
                 final String day = dayOfMonth+"/"+(month+1)+"/"+year;
                 String[] separate = day.split("/");
                 day_d = separate[0];
-                month_m = separate[1];
+                month_m = separate[1]+separate[2];
                 year_y = separate[2];
                 final String month_m = (month+1)+"/"+year;
                 final String year_y = String.valueOf(year);
                 theDate.setText(day);
                 String item=getText(day);
                 text_list.setText(item);
-                total_text.setText(getTotalDay(day_d));
+                total_text.setText(getTotalDay(day));
+                total_month_text.setText(getTotalMonth(month_m));
 
                 btnAdd[0] = findViewById(R.id.add);
                 btnAdd[0].setOnClickListener(new View.OnClickListener() {
@@ -102,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        total_text.setText(getTotalDay(day_d));
-        total_month_text.setText(getTotalMonth(month_m));
+        //total_text.setText(getTotalDay(day_d));
+        //total_month_text.setText(getTotalMonth(month_m));
 
     }
 
@@ -131,18 +132,19 @@ public class MainActivity extends AppCompatActivity {
         while(data.moveToNext()){
             listData.add(data.getInt(1));
         }
-        double totalDay = 0;
-        for (int i = 0 ; i<theList_cal.size() ; i++){
-            totalDay = totalDay + Double.parseDouble(theList_cal.get(i));
+        int totalDay = 0;
+        for (int i = 0 ; i<listData.size() ; i++){
+            totalDay = totalDay + listData.get(i);
         }
         return "Total : " + totalDay;
     }
+
 
     public String getTotalMonth(String month) {
         Cursor data = myDB.getTotalMonth(month);
         ArrayList<Integer> listData = new ArrayList<>();
         while(data.moveToNext()){
-            listData.add(data.getInt(1));
+            listData.add(data.getInt(2));
         }
         int total=0;
         for(int i=0;i<listData.size();i++){

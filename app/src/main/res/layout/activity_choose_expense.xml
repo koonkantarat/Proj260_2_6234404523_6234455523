@@ -61,15 +61,15 @@
 
     <Button
         android:id="@+id/ok"
-        android:layout_width="118dp"
-        android:layout_height="47dp"
+        android:layout_width="122dp"
+        android:layout_height="52dp"
         android:text="OK"
-        app:layout_constraintBottom_toTopOf="@+id/backToMain"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintHorizontal_bias="0.266"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cost"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662" />
 
     <Spinner
         android:id="@+id/typespin"
@@ -84,15 +84,15 @@
 
     <Button
         android:id="@+id/btnView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="117dp"
+        android:layout_height="53dp"
         android:text="ViewData"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toEndOf="@+id/ok"
-        app:layout_constraintTop_toBottomOf="@+id/cost"
-        app:layout_constraintVertical_bias="0.123" />
+        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.663" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

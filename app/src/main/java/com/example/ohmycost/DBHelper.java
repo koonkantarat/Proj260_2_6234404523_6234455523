@@ -63,7 +63,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //System.out.println(contentValues);
         Log.d(TAG,"database" + db ); //ครั้งแรกแอดค่าเป็น null
         Log.d(TAG, "addData: Adding " + type + ","+ expense + " to " + TABLE_NAME);
-        Log.d(TAG, "addDate: Adding " + day + "/"+ month + "/" + year + " to " + TABLE_NAME);
+        Log.d(TAG, "addDate: Adding " + day + ","+ month + "," + year + " to " + TABLE_NAME);
         long result = db.insert(TABLE_NAME,null,contentValues);
         //System.out.println(db);
         db.close();
@@ -179,5 +179,26 @@ public class DBHelper extends SQLiteOpenHelper {
                 COL_EXPENSE + " = '" + amount + "'"+ " AND " + COL_DAY + " = '" + day + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
+    }
+
+    public void updateName(String newName, int id, String oldName){
+        SQLiteDatabase SQdb = this.getWritableDatabase();
+        String query = "UPDATE "+ TABLE_NAME + " SET "+ COL_EXPENSE +
+                " = '"+ newName + "' WHERE "+ COL_ID + " = '"+ id +"'"+
+                " AND "+ COL_EXPENSE + " = '"+ oldName + "'";
+        Log.d(TAG, "updateName: query: " + query);
+        Log.d(TAG, "updateName: Setting name to "+ newName);
+        SQdb.execSQL(query);
+        SQdb.close();
+    }
+
+    public void deleteName(int id, String expense){
+        SQLiteDatabase SQdb = this.getWritableDatabase();
+        String query = "DELETE FROM "+ TABLE_NAME + " WHERE "+ COL_ID +
+                " = '" + id + "'" +  " AND " + COL_EXPENSE + "= '" + expense + "'";
+        Log.d(TAG, "deleteName: query: " + query);
+        Log.d(TAG, "deleteName: Deleting " + expense + " from database.");
+        SQdb.execSQL(query);
+        SQdb.close();
     }
 }

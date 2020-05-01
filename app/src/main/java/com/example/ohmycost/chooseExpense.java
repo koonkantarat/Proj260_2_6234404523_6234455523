@@ -75,6 +75,9 @@ public class  chooseExpense extends AppCompatActivity {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Other")){
                     Intent page_other = new Intent(chooseExpense.this, OtherType.class);
+                    page_other.putExtra("day",day_choose);
+                    page_other.putExtra("month",month_choose);
+                    page_other.putExtra("year",year_choose);
                     startActivity(page_other);
                 }
             }
@@ -89,6 +92,8 @@ public class  chooseExpense extends AppCompatActivity {
                 Intent all = new Intent(chooseExpense.this,ViewListContents.class);
 
                 all.putExtra("day",day_choose);
+                all.putExtra("month",month_choose);
+                all.putExtra("year",year_choose);
                 all.putExtra("expense",expenseStr);
                 startActivity(all);
             }

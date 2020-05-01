@@ -27,10 +27,14 @@ public class OtherType extends AppCompatActivity {
         dataType = findViewById(R.id.dataType);
         backToChoose = findViewById(R.id.backToChooseExpense);
 
+
+
         SQdb = new DatabaseHelper(this);
 
         Intent bundle1 = getIntent();
         final String day = bundle1.getStringExtra("day");
+        final String month_choose = bundle1.getStringExtra("month");
+        final String year_choose = bundle1.getStringExtra("year");
 
 
         addtype.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +55,8 @@ public class OtherType extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent dataType = new Intent(OtherType.this, TypeData.class);
                         dataType.putExtra("day",day);
+                        dataType.putExtra("month",month_choose);
+                        dataType.putExtra("year",year_choose);
                         startActivity(dataType);
                     }
                 });
@@ -60,6 +66,8 @@ public class OtherType extends AppCompatActivity {
             public void onClick(View v) {
                 Intent backToChoose = new Intent(OtherType.this, chooseExpense.class);
                 backToChoose.putExtra("day",day);
+                backToChoose.putExtra("month",month_choose);
+                backToChoose.putExtra("year",year_choose);
                 startActivity(backToChoose);
             }
         });

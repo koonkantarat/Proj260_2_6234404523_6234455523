@@ -46,6 +46,10 @@ public class TypeData extends AppCompatActivity {
 
     private void populateListView(){
         Log.d(TAG, "populateListView: Display data in the ListView. ");
+        Intent bundle1 = getIntent();
+        final String day = bundle1.getStringExtra("day");
+        final String month_choose = bundle1.getStringExtra("month");
+        final String year_choose = bundle1.getStringExtra("year");
         Cursor data = SQdb.getData();
         ArrayList<String> TypeList = new ArrayList<>();
         while(data.moveToNext()){
@@ -71,6 +75,9 @@ public class TypeData extends AppCompatActivity {
                     Intent editType = new Intent(TypeData.this, EditType.class);
                     editType.putExtra("id", itemID);
                     editType.putExtra("name", name);
+                    editType.putExtra("day",day);
+                    editType.putExtra("month",month_choose);
+                    editType.putExtra("year",year_choose);
                     startActivity(editType);
                 } else {
                     Toast.makeText(TypeData.this, "No ID with that name", Toast.LENGTH_SHORT).show();

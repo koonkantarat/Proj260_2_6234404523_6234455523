@@ -66,7 +66,7 @@ public class ViewListContents extends AppCompatActivity {
     private void populateListView(){
         Log.d(TAG, "populateListView: Display data in the ListView. ");
         //final String day_y = getIntent().getExtras().getString("day");
-        //final String expense_e = getIntent().getExtras().getString("expense");
+        //final Strin0g expense_e = getIntent().getExtras().getString("expense");
         Cursor data = myDB.getData(day_y);
         ArrayList<String> TypeList = new ArrayList<>();
         while(data.moveToNext()){
@@ -95,7 +95,7 @@ public class ViewListContents extends AppCompatActivity {
                     Log.d(String.valueOf(ViewListContents.class), "OnItemClick: The ID is:" + itemID);
                     Intent intent_i = new Intent(ViewListContents.this, EditList.class);
                     intent_i.putExtra("id", itemID);
-                    intent_i.putExtra("name", expense_e);
+                    intent_i.putExtra("expense", expense_e);
                     intent_i.putExtra("day",day_y);
                     startActivity(intent_i);
                 } else {

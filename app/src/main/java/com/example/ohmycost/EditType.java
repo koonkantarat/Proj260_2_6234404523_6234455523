@@ -36,6 +36,10 @@ public class EditType extends AppCompatActivity {
         selectedID = receivedIntent.getIntExtra("id" , -1);
         selectedName = receivedIntent.getStringExtra("name");
 
+        final String day = receivedIntent.getStringExtra("day");
+        final String month_choose = receivedIntent.getStringExtra("month");
+        final String year_choose = receivedIntent.getStringExtra("year");
+
         editType.setText(selectedName);
 
         //แก้ไขTypeตามที่ผู้ใช้ต้องการในฐานข้อมูล
@@ -65,6 +69,9 @@ public class EditType extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backToTypedata = new Intent(EditType.this, TypeData.class);
+                backToTypedata.putExtra("day",day);
+                backToTypedata.putExtra("month",month_choose);
+                backToTypedata.putExtra("year",year_choose);
                 startActivity(backToTypedata);
             }
         });
