@@ -61,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(DBHelper.COL_MONTH,month);
         contentValues.put(DBHelper.COL_YEAR,year);
         //System.out.println(contentValues);
-        Log.d(TAG,"database" + db );
+        Log.d(TAG,"database" + db ); //ครั้งแรกแอดค่าเป็น null
         Log.d(TAG, "addData: Adding " + type + ","+ expense + " to " + TABLE_NAME);
         Log.d(TAG, "addDate: Adding " + day + "/"+ month + "/" + year + " to " + TABLE_NAME);
         long result = db.insert(TABLE_NAME,null,contentValues);
@@ -84,7 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(DBHelper.COL_YEAR,year);
         Log.d(TAG, "addDate: " + day + "/"+ month + "/" + year + " to " + TABLE_NAME);
         long result = db.insert(TABLE_NAME,null,contentValues);
-        db.close();
+        //db.close();
         //insert return -1
         if(result == -1){
             return false;
@@ -110,10 +110,74 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getListDay(String day, String month, String year){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE" + COL_DAY + " = '" + day + "'" + " AND"
-                + COL_MONTH + " = '" + month + "'" + COL_YEAR + " = '" + year + "'";
+        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE " + COL_DAY + " = '" + day + "'" + " AND "
+                + COL_MONTH + " = '" + month + "'" + " AND " + COL_YEAR + " = '" + year + "'";
+        //TABLE_NAME + " WHERE " + COL_DAY + " = '" + day + "'" + " AND " + COL_MONTH + " = '" + month + "'";
         Cursor data_Date = db.rawQuery(query,null);
         Log.d(TAG,data_Date + TABLE_NAME);
         return data_Date;
+    }
+
+    public Cursor getData(String day){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_ID + "," + COL_TYPE + "," + COL_EXPENSE + " FROM " +
+                TABLE_NAME + " WHERE " + COL_DAY + " = '" + day + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getAmount(String day){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_TYPE + "," + COL_EXPENSE + " FROM " + TABLE_NAME + " WHERE " +
+                COL_DAY + " = '" + day + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getDayMonth(String day,String month){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_TYPE + "," + COL_EXPENSE + " FROM " +
+                TABLE_NAME + " WHERE " + COL_DAY + " = '" + day + "'" + " AND " + COL_MONTH + " = '" + month + "'"; //ใช้ where เช็ค month ไปแล้ว
+        //COL_EXPENSE + " = '" + amount + "'"+ " AND " + COL_DAY + " = '" + day + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getTotalMonth(String month){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_ID + "," + COL_TYPE + "," + COL_EXPENSE + " FROM " +
+                TABLE_NAME + " WHERE " + COL_MONTH + " = '" + month + "'"; //ใช้ where เช็ค month ไปแล้ว
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getType(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_TYPE + " FROM " +TABLE_NAME ;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getMonthYear(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_MONTH + " FROM " +TABLE_NAME + " ORDER BY " + COL_MONTH + " ASC";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getDataMonth(String month){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_TYPE + "," + COL_EXPENSE + " FROM " + TABLE_NAME +
+                " WHERE " + COL_MONTH + " = '" + month + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getItemID(String day,String amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_ID + " FROM " + TABLE_NAME + " WHERE " +
+                COL_EXPENSE + " = '" + amount + "'"+ " AND " + COL_DAY + " = '" + day + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
     }
 }

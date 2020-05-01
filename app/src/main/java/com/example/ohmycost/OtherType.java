@@ -29,6 +29,9 @@ public class OtherType extends AppCompatActivity {
 
         SQdb = new DatabaseHelper(this);
 
+        Intent bundle1 = getIntent();
+        final String day = bundle1.getStringExtra("day");
+
 
         addtype.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +50,7 @@ public class OtherType extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent dataType = new Intent(OtherType.this, TypeData.class);
+                        dataType.putExtra("day",day);
                         startActivity(dataType);
                     }
                 });
@@ -55,6 +59,7 @@ public class OtherType extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backToChoose = new Intent(OtherType.this, chooseExpense.class);
+                backToChoose.putExtra("day",day);
                 startActivity(backToChoose);
             }
         });
