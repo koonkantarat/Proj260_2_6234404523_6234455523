@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             listData.add(data.getInt(1));
         }
         int total=0;
-        for(int i=0;i<=listData.size()-1;i++){
+        for(int i=0;i<listData.size();i++){
             total+=listData.get(i);
         }
         return "Total month= "+total+" Baht";

@@ -41,21 +41,6 @@ public class ViewListContents extends AppCompatActivity {
         Intent intent = getIntent();
         day_y = intent.getStringExtra("day");
         expense_e = intent.getStringExtra("expense");
-        //final String month_m = getIntent().getExtras().getString("month");
-        //final String year_y = getIntent().getExtras().getString("year");
-
-        //ArrayList<String> theList = new ArrayList<>();
-        //Cursor data = myDB.getListContents_ex();
-
-        /*if(data.getCount() == 0){
-            Toast.makeText(ViewListContents.this,"db was empty",Toast.LENGTH_LONG).show();
-        }else{
-            while (data.moveToNext()) {
-                theList.add(data.getString(1)+": " + data.getInt(2));
-                listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
-                listView.setAdapter(listAdapter);
-            }
-        }*/
 
         populateListView();
 
